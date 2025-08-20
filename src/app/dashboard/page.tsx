@@ -224,16 +224,56 @@ export default function Dashboard() {
                 <CardDescription className="text-base">Create your login key to access services</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-3 text-left mb-4">
-                  <label className="text-sm font-medium">GROQ API Key</label>
-                  <input
-                    type="text"
-                    value={grokKeyInput}
-                    onChange={(e) => setGrokKeyInput(e.target.value)}
-                    placeholder="Enter your GROQ API key (starts with gsk_...)"
-                    className="w-full h-10 px-3 rounded-md border border-border/60 bg-background"
-                  />
-                  <p className="text-xs text-muted-foreground">We store this securely and use it only for generating SQL in the desktop app.</p>
+                <div className="space-y-4 text-left mb-6">
+                  <div className="space-y-2">
+                    <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                      <span className="w-2 h-2 bg-primary rounded-full"></span>
+                      GROQ API Key
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="text"
+                        value={grokKeyInput}
+                        onChange={(e) => setGrokKeyInput(e.target.value)}
+                        placeholder="Enter your GROQ API key (starts with gsk_...)"
+                        className="w-full h-12 px-4 rounded-lg border-2 border-border/60 bg-background/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 text-base"
+                      />
+                      {grokKeyInput && (
+                        <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                          <div className={`w-3 h-3 rounded-full ${/^gsk_[A-Za-z0-9_-]{20,}$/.test(grokKeyInput.trim()) ? 'bg-green-500' : 'bg-red-500'}`}></div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  
+                  <div className="bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4 space-y-3">
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="text-blue-600 dark:text-blue-400 text-xs font-bold">i</span>
+                      </div>
+                      <div className="space-y-2">
+                        <p className="text-sm text-blue-800 dark:text-blue-200 font-medium">
+                          We store this securely and use it only for generating SQL in the desktop app.
+                        </p>
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm text-blue-700 dark:text-blue-300">
+                            Don't have a GROQ API key?
+                          </span>
+                          <a 
+                            href="https://console.groq.com/keys" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition-colors duration-200 shadow-sm hover:shadow-md"
+                          >
+                            <span>Get one from Groq Console</span>
+                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <Button onClick={generateKey} disabled={generating} className="w-full h-12 text-base font-semibold gap-3" size="lg">
                   <Plus className="h-5 w-5" />
