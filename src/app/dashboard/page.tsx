@@ -22,6 +22,8 @@ export default function Dashboard() {
   const [error, setError] = useState("")
   const [showRevokeModal, setShowRevokeModal] = useState(false)
   const [revoking, setRevoking] = useState(false)
+  const [grokKeyInput, setGrokKeyInput] = useState("")
+  const [showGrokInput, setShowGrokInput] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
@@ -68,17 +70,36 @@ export default function Dashboard() {
     setMessage("")
 
     try {
+      if (!grokKeyInput.trim()) {
+        setShowGrokInput(true)
+        setGenerating(false)
+        setError("Please enter your GROQ API key")
+        return
+      }
+
+      // Client-side format validation for GROQ key
+      const looksLikeGrok = /^gsk_[A-Za-z0-9_-]{20,}$/.test(grokKeyInput.trim())
+      if (!looksLikeGrok) {
+        setShowGrokInput(true)
+        setGenerating(false)
+        setError("Invalid GROQ API key format. It should start with gsk_ and be long.")
+        return
+      }
+
       const response = await fetch("http://localhost:3001/api/keys/generate", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
+        body: JSON.stringify({ grokApiKey: grokKeyInput.trim() })
       })
 
       if (response.ok) {
         const data = await response.json()
         setMessage("Key generated successfully!")
+        setShowGrokInput(false)
+        setGrokKeyInput("")
         fetchCurrentKey()
       } else {
         const errorData = await response.json()
@@ -198,11 +219,22 @@ export default function Dashboard() {
                   <Plus className="h-8 w-8 text-primary" />
                 </div>
                 <CardTitle className="text-2xl flex items-center justify-center gap-3">
-                  Generate API Key
+                  Generate Login Key
                 </CardTitle>
-                <CardDescription className="text-base">Create your API key to access services</CardDescription>
+                <CardDescription className="text-base">Create your login key to access services</CardDescription>
               </CardHeader>
               <CardContent>
+                <div className="space-y-3 text-left mb-4">
+                  <label className="text-sm font-medium">GROQ API Key</label>
+                  <input
+                    type="text"
+                    value={grokKeyInput}
+                    onChange={(e) => setGrokKeyInput(e.target.value)}
+                    placeholder="Enter your GROQ API key (starts with gsk_...)"
+                    className="w-full h-10 px-3 rounded-md border border-border/60 bg-background"
+                  />
+                  <p className="text-xs text-muted-foreground">We store this securely and use it only for generating SQL in the desktop app.</p>
+                </div>
                 <Button onClick={generateKey} disabled={generating} className="w-full h-12 text-base font-semibold gap-3" size="lg">
                   <Plus className="h-5 w-5" />
                   {generating ? "Generating..." : "Generate Key"}
@@ -218,8 +250,8 @@ export default function Dashboard() {
                     <Key className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <CardTitle className="text-2xl">Your API Key</CardTitle>
-                    <CardDescription className="text-base">Manage your current API key</CardDescription>
+                    <CardTitle className="text-2xl">Your Login Key</CardTitle>
+                    <CardDescription className="text-base">Manage your current login key</CardDescription>
                   </div>
                 </div>
               </CardHeader>
@@ -270,13 +302,13 @@ export default function Dashboard() {
                 <AlertTriangle className="h-6 w-6 text-destructive" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-foreground">Revoke API Key</h3>
+                <h3 className="text-xl font-bold text-foreground">Revoke Login Key</h3>
                 <p className="text-sm text-muted-foreground/80">This action cannot be undone</p>
               </div>
             </div>
             
             <p className="text-sm text-muted-foreground/80 mb-8 leading-relaxed">
-              Are you sure you want to revoke this API key? Once revoked, it will no longer work and you'll need to generate a new one.
+              Are you sure you want to revoke this login key? Once revoked, it will no longer work and you'll need to generate a new one.
             </p>
             
             <div className="flex gap-4">
