@@ -179,15 +179,15 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b border-border/60 bg-card/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50/30 via-cyan-50/20 to-amber-50/30">
+      <header className="border-b border-blue-200/50 bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="space-y-2">
               <h1 className="text-4xl font-bold tracking-tight text-foreground">Dashboard</h1>
               <p className="text-muted-foreground/80 text-lg">Welcome back, {user.email}</p>
             </div>
-            <Button onClick={logout} variant="outline" size="lg" className="gap-3 bg-transparent hover:bg-muted/50">
+            <Button onClick={logout} variant="outline" size="lg" className="gap-3 bg-transparent hover:bg-muted/50 hover:text-red-800">
               <LogOut className="h-5 w-5" />
               Logout
             </Button>
@@ -213,7 +213,7 @@ export default function Dashboard() {
         <div className="flex items-center justify-center min-h-[60vh] animate-fade-in">
           {!currentKey ? (
             // No key - Show generate button
-            <Card className="w-full max-w-md border-border/50 shadow-xl text-center animate-slide-up">
+            <Card className="w-full max-w-md card-queryai text-center animate-slide-up">
               <CardHeader className="space-y-3">
                 <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
                   <Plus className="h-8 w-8 text-primary" />
@@ -246,36 +246,50 @@ export default function Dashboard() {
                     </div>
                   </div>
                   
-                  <div className="bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4 space-y-3">
-                    <div className="flex items-start gap-3">
-                      <div className="w-6 h-6 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <span className="text-blue-600 dark:text-blue-400 text-xs font-bold">i</span>
-                      </div>
-                      <div className="space-y-2">
-                        <p className="text-sm text-blue-800 dark:text-blue-200 font-medium">
-                          We store this securely and use it only for generating SQL in the desktop app.
-                        </p>
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm text-blue-700 dark:text-blue-300">
-                            Don't have a GROQ API key?
-                          </span>
-                          <a 
-                            href="https://console.groq.com/keys" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition-colors duration-200 shadow-sm hover:shadow-md"
-                          >
-                            <span>Get one from Groq Console</span>
-                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                            </svg>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                                     <div className="relative">
+                     <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-cyan-400/20 rounded-xl blur-lg"></div>
+                     <div className="relative bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-blue-200/50 shadow-lg">
+                       <div className="absolute top-3 right-3 bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-semibold">
+                         Secure
+                       </div>
+                       
+                       <div className="flex items-start gap-3 mb-4">
+                         <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-md flex-shrink-0">
+                           <Shield className="h-4 w-4 text-white" />
+                         </div>
+                         <div className="space-y-2">
+                           <h3 className="text-sm font-semibold text-gray-800">Secure Storage</h3>
+                           <p className="text-gray-600 text-sm leading-relaxed">
+                             We store this securely and use it only for generating SQL in the desktop app.
+                           </p>
+                         </div>
+                       </div>
+                       
+                       <div className="bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200/50 rounded-lg p-3 space-y-3">
+                         <div className="flex items-center gap-2">
+                           <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
+                             <span className="text-blue-600 text-xs font-bold">?</span>
+                           </div>
+                           <span className="text-sm text-blue-800 font-semibold">
+                             Don't have a GROQ API key?
+                           </span>
+                         </div>
+                         <a 
+                           href="https://console.groq.com/keys" 
+                           target="_blank" 
+                           rel="noopener noreferrer"
+                           className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white text-sm font-semibold rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 w-full justify-center"
+                         >
+                           <span>Get one from Groq Console</span>
+                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                           </svg>
+                         </a>
+                       </div>
+                     </div>
+                   </div>
                 </div>
-                <Button onClick={generateKey} disabled={generating} className="w-full h-12 text-base font-semibold gap-3" size="lg">
+                <Button onClick={generateKey} disabled={generating} className="w-full h-12 text-base font-semibold gap-3 btn-queryai-primary" size="lg">
                   <Plus className="h-5 w-5" />
                   {generating ? "Generating..." : "Generate Key"}
                 </Button>
@@ -283,7 +297,7 @@ export default function Dashboard() {
             </Card>
           ) : (
             // Has key - Show key info and actions
-            <Card className="w-full max-w-2xl border-border/50 shadow-xl animate-slide-up">
+            <Card className="w-full max-w-2xl card-queryai animate-slide-up">
               <CardHeader className="space-y-3">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">

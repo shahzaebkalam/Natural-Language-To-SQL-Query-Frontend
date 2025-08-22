@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowLeft, Mail, Lock, Eye, EyeOff } from "lucide-react"
+import { ArrowLeft, Mail, Lock, Eye, EyeOff, Database } from "lucide-react"
 
 export default function Login() {
   const [email, setEmail] = useState("")
@@ -61,14 +61,24 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8 animate-fade-in">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50/50 via-cyan-50/30 to-amber-50/50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-50/20 via-cyan-50/10 to-amber-50/20"></div>
+      <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-blue-400/20 to-cyan-400/20 rounded-full blur-xl animate-pulse"></div>
+      <div className="absolute bottom-20 right-10 w-24 h-24 bg-gradient-to-br from-amber-400/20 to-orange-400/20 rounded-full blur-lg animate-bounce"></div>
+      
+      <div className="max-w-md w-full space-y-8 animate-fade-in relative">
         <div className="text-center space-y-3">
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <div className="w-8 h-8 bg-gradient-queryai-blue rounded-lg flex items-center justify-center">
+              <Database className="h-5 w-5 text-white" />
+            </div>
+            <span className="text-xl font-bold text-foreground">QueryAI</span>
+          </div>
           <h1 className="text-4xl font-bold tracking-tight text-foreground">Welcome back</h1>
           <p className="text-muted-foreground text-lg">Sign in to your account to continue</p>
         </div>
 
-        <Card className="border-border/50 shadow-xl animate-slide-up">
+        <Card className="card-queryai animate-slide-up">
           <CardHeader className="space-y-2">
             <CardTitle className="text-2xl">Sign in</CardTitle>
             <CardDescription>Enter your credentials to access your account</CardDescription>
@@ -82,7 +92,7 @@ export default function Login() {
               )}
 
               {error && (
-                <div className="bg-destructive/10 border border-destructive/20 text-destructive-foreground px-4 py-3 rounded-lg text-sm font-medium animate-scale-in">
+                <div className="bg-destructive/10 border border-destructive/20 text-destructive-foreground px-4 py-3 rounded-lg text-sm font-medium animate-scale-in text-red-800">
                   {error}
                 </div>
               )}
@@ -136,7 +146,7 @@ export default function Login() {
                 </div>
               </div>
 
-              <Button type="submit" disabled={loading} className="w-full h-12 text-base font-semibold" size="lg">
+              <Button type="submit" disabled={loading} className="w-full h-12 text-base font-semibold btn-queryai-primary" size="lg">
                 {loading ? "Signing in..." : "Sign in"}
               </Button>
             </form>
@@ -144,7 +154,7 @@ export default function Login() {
             <div className="mt-8 space-y-5">
               <div className="text-center text-sm">
                 <span className="text-muted-foreground/80">Don't have an account? </span>
-                <Link href="/signup" className="font-semibold text-primary hover:text-primary/80 transition-colors duration-200">
+                <Link href="/signup" className="font-semibold text-blue-600 hover:text-blue-700 transition-colors duration-200">
                   Create account
                 </Link>
               </div>
